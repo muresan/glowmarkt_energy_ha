@@ -1,0 +1,47 @@
+[
+ {
+  "clone": false,
+  "active": true,
+  "applicationId": "b0f1b774-a586-4f72-9edd-27ead8aa7a8d",
+  "veTypeId": "ve0type1-0000-4000-8000-000000000001",
+  "resources": [
+   {
+    "resourceId": "e1ec0001-0000-4000-8000-000000000001",
+    "resourceTypeId": "e1ec0001-0000-4000-9000-000000000001",
+    "name": "electricity consumption"
+   },
+   {
+    "resourceId": "e1ec0c05-0000-4000-8000-000000000002",
+    "resourceTypeId": "e1ec0c05-0000-4000-9000-000000000002",
+    "name": "electricity cost"
+   },
+   {
+    "resourceId": "9a500c05-0000-4000-8000-000000000004",
+    "resourceTypeId": "9a500c05-0000-4000-9000-000000000004",
+    "name": "gas cost"
+   },
+   {
+    "resourceId": "9a500001-0000-4000-8000-000000000003",
+    "resourceTypeId": "9a500001-0000-4000-9000-000000000003",
+    "name": "gas consumption"
+   }
+  ],
+  "name": "DCC Sourced",
+  "veId": "ve000001-0000-4000-8000-000000000001",
+  "updatedAt": "2026-10-19T00:44:40.919Z",
+  "createdAt": "2026-10-19T00:42:59.662Z",
+  "veChildren": []
+ },
+ {
+  "clone": false,
+  "active": true,
+  "applicationId": "b0f1b774-a586-4f72-9edd-27ead8aa7a8d",
+  "veTypeId": "ve0type1-0000-4000-8000-000000000001",
+  "resources": [],
+  "name": "DCC Sourced",
+  "veId": "ve000002-0000-4000-8000-000000000002",
+  "updatedAt": "2026-10-19T00:42:35.824Z",
+  "createdAt": "2026-10-19T00:42:35.824Z",
+  "veChildren": []
+ }
+]

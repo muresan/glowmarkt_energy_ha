@@ -1,0 +1,17 @@
+{
+ "active": true,
+ "resourceTypeId": "9a500001-0000-4000-9000-000000000003",
+ "name": "gas consumption",
+ "description": "gas consumption DCC SM profile reads",
+ "label": "gas consumption DCC SM profile reads",
+ "dataSourceResourceTypeInfo": {
+  "unit": "kWh",
+  "type": "GAS"
+ },
+ "dataSourceType": "AMRAPI",
+ "classifier": "gas.consumption",
+ "baseUnit": "kWh",
+ "resourceId": "9a500001-0000-4000-8000-000000000003",
+ "updatedAt": "2026-10-19T00:44:40.863Z",
+ "createdAt": "2026-10-19T00:44:40.445Z"
+}

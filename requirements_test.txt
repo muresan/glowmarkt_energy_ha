@@ -1,0 +1,2 @@
+# Runs the integration inside a real (in-process) Home Assistant; pins a matching homeassistant.
+pytest-homeassistant-custom-component

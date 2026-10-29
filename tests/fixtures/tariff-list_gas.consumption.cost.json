@@ -1,0 +1,26 @@
+{
+ "valid": true,
+ "status": "OK",
+ "resourceId": "9a500c05-0000-4000-8000-000000000004",
+ "classifier": "gas.consumption.cost",
+ "data": [
+  {
+   "id": 2,
+   "plan": [
+    {
+     "planDetail": [
+      {
+       "standing": 29.886
+      },
+      {
+       "rate": 7.871,
+       "ratem3": 84.963
+      }
+     ]
+    }
+   ],
+   "effectiveDate": "2026-10-19 00:00:00",
+   "displayName": "fromDCC"
+  }
+ ]
+}

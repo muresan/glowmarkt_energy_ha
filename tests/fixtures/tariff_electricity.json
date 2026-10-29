@@ -1,0 +1,56 @@
+{
+ "status": "OK",
+ "name": "electricity consumption",
+ "resourceTypeId": "e1ec0001-0000-4000-9000-000000000001",
+ "resourceId": "e1ec0001-0000-4000-8000-000000000001",
+ "data": [
+  {
+   "utility": "HILD",
+   "from": "2026-10-19 00:00:00",
+   "commodity": "ELEC",
+   "structure": [
+    {
+     "weekName": "1",
+     "source": "DCC",
+     "planDetail": [
+      {
+       "standing": 61.41
+      },
+      {
+       "rate": 26.11,
+       "tier": 1
+      }
+     ]
+    }
+   ],
+   "type": "flatrate",
+   "plan": [
+    {
+     "note": "This is a legacy structure and is due to be deprecated after transition.",
+     "planDetail": [
+      {
+       "standing": 61.41
+      },
+      {
+       "rate": 26.11,
+       "tier": 1
+      }
+     ],
+     "weekName": "1",
+     "source": "DCC"
+    }
+   ],
+   "id": 1,
+   "cid": "PWER",
+   "currentRates": {
+    "rate": 26.11,
+    "standingCharge": 61.41
+   },
+   "name": "fromDCC",
+   "source": {
+    "value": "d"
+   }
+  }
+ ],
+ "classifier": "electricity.consumption"
+}

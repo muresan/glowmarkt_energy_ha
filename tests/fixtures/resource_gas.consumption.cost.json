@@ -1,0 +1,17 @@
+{
+ "active": true,
+ "resourceTypeId": "9a500c05-0000-4000-9000-000000000004",
+ "name": "gas cost",
+ "description": "gas cost DCC SM profile reads",
+ "label": "gas cost DCC SM profile reads",
+ "dataSourceResourceTypeInfo": {
+  "unit": "pence",
+  "type": "GAS"
+ },
+ "dataSourceType": "AMRAPI",
+ "classifier": "gas.consumption.cost",
+ "baseUnit": "pence",
+ "resourceId": "9a500c05-0000-4000-8000-000000000004",
+ "updatedAt": "2026-10-19T00:44:40.868Z",
+ "createdAt": "2026-10-19T00:44:40.498Z"
+}

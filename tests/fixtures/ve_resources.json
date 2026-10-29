@@ -1,0 +1,83 @@
+{
+ "clone": false,
+ "active": true,
+ "applicationId": "b0f1b774-a586-4f72-9edd-27ead8aa7a8d",
+ "veTypeId": "ve0type1-0000-4000-8000-000000000001",
+ "resources": [
+  {
+   "active": true,
+   "resourceTypeId": "e1ec0001-0000-4000-9000-000000000001",
+   "name": "electricity consumption",
+   "description": "electicity consumption DCC SM profile reads",
+   "label": "electicity consumption DCC SM profile reads",
+   "dataSourceResourceTypeInfo": {
+    "unit": "kWh",
+    "type": "ELEC"
+   },
+   "dataSourceType": "AMRAPI",
+   "classifier": "electricity.consumption",
+   "baseUnit": "kWh",
+   "resourceId": "e1ec0001-0000-4000-8000-000000000001",
+   "updatedAt": "2026-10-19T00:44:10.340Z",
+   "createdAt": "2026-10-19T00:44:09.086Z"
+  },
+  {
+   "active": true,
+   "resourceTypeId": "e1ec0c05-0000-4000-9000-000000000002",
+   "name": "electricity cost",
+   "description": "electicity cost DCC SM profile reads",
+   "label": "electicity cost DCC SM profile reads",
+   "dataSourceResourceTypeInfo": {
+    "unit": "pence",
+    "type": "ELEC"
+   },
+   "dataSourceType": "AMRAPI",
+   "classifier": "electricity.consumption.cost",
+   "baseUnit": "pence",
+   "resourceId": "e1ec0c05-0000-4000-8000-000000000002",
+   "updatedAt": "2026-10-19T00:44:10.343Z",
+   "createdAt": "2026-10-19T00:44:09.157Z"
+  },
+  {
+   "active": true,
+   "resourceTypeId": "9a500c05-0000-4000-9000-000000000004",
+   "name": "gas cost",
+   "description": "gas cost DCC SM profile reads",
+   "label": "gas cost DCC SM profile reads",
+   "dataSourceResourceTypeInfo": {
+    "unit": "pence",
+    "type": "GAS"
+   },
+   "dataSourceType": "AMRAPI",
+   "classifier": "gas.consumption.cost",
+   "baseUnit": "pence",
+   "resourceId": "9a500c05-0000-4000-8000-000000000004",
+   "updatedAt": "2026-10-19T00:44:40.868Z",
+   "createdAt": "2026-10-19T00:44:40.498Z"
+  },
+  {
+   "active": true,
+   "resourceTypeId": "9a500001-0000-4000-9000-000000000003",
+   "name": "gas consumption",
+   "description": "gas consumption DCC SM profile reads",
+   "label": "gas consumption DCC SM profile reads",
+   "dataSourceResourceTypeInfo": {
+    "unit": "kWh",
+    "type": "GAS"
+   },
+   "dataSourceType": "AMRAPI",
+   "classifier": "gas.consumption",
+   "baseUnit": "kWh",
+   "resourceId": "9a500001-0000-4000-8000-000000000003",
+   "updatedAt": "2026-10-19T00:44:40.863Z",
+   "createdAt": "2026-10-19T00:44:40.445Z"
+  }
+ ],
+ "name": "DCC Sourced",
+ "timestamp": "2026-10-19T00:42:59.661Z",
+ "veId": "ve000001-0000-4000-8000-000000000001",
+ "updatedAt": "2026-10-19T00:44:40.919Z",
+ "createdAt": "2026-10-19T00:42:59.662Z",
+ "id": "6a0000000000000000000001",
+ "veChildren": []
+}

@@ -1,0 +1,14 @@
+{
+  "domain": "glowmarkt_energy",
+  "name": "Glowmarkt Energy (Bright)",
+  "codeowners": [],
+  "config_flow": true,
+  "dependencies": ["recorder"],
+  "documentation": "https://api.glowmarkt.com/api-docs/v0-1/resourcesys/",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://example.invalid/issues",
+  "loggers": ["custom_components.glowmarkt_energy"],
+  "requirements": [],
+  "version": "0.3.0"
+}

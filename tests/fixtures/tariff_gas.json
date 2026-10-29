@@ -1,0 +1,52 @@
+{
+ "status": "OK",
+ "name": "gas consumption",
+ "resourceTypeId": "9a500001-0000-4000-9000-000000000003",
+ "resourceId": "9a500001-0000-4000-8000-000000000003",
+ "data": [
+  {
+   "commodity": "GAS",
+   "from": "2026-10-19 00:00:00",
+   "utility": "HILD",
+   "type": "flatrate",
+   "structure": [
+    {
+     "planDetail": [
+      {
+       "standing": 29.886
+      },
+      {
+       "ratem3": 84.963,
+       "rate": 7.871
+      }
+     ]
+    }
+   ],
+   "currentRates": {
+    "standingCharge": 29.886,
+    "rate": 7.871
+   },
+   "plan": [
+    {
+     "note": "This is a legacy structure and is due to be deprecated after transition.",
+     "planDetail": [
+      {
+       "standing": 29.886
+      },
+      {
+       "rate": 7.871,
+       "ratem3": 84.963
+      }
+     ]
+    }
+   ],
+   "id": 2,
+   "cid": "GAS",
+   "name": "fromDCC",
+   "source": {
+    "value": "d"
+   }
+  }
+ ],
+ "classifier": "gas.consumption"
+}

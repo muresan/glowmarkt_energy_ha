@@ -1,0 +1,17 @@
+{
+ "active": true,
+ "resourceTypeId": "e1ec0001-0000-4000-9000-000000000001",
+ "name": "electricity consumption",
+ "description": "electicity consumption DCC SM profile reads",
+ "label": "electicity consumption DCC SM profile reads",
+ "dataSourceResourceTypeInfo": {
+  "unit": "kWh",
+  "type": "ELEC"
+ },
+ "dataSourceType": "AMRAPI",
+ "classifier": "electricity.consumption",
+ "baseUnit": "kWh",
+ "resourceId": "e1ec0001-0000-4000-8000-000000000001",
+ "updatedAt": "2026-10-19T00:44:10.340Z",
+ "createdAt": "2026-10-19T00:44:09.086Z"
+}

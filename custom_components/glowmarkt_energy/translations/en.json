@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Glowmarkt (Bright) account",
+        "description": "Use the same username and password as the Bright app.",
+        "data": {
+          "username": "Username (email)",
+          "password": "Password",
+          "application_id": "Application ID"
+        },
+        "data_description": {
+          "application_id": "Leave the default unless your organisation was issued its own ID."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Re-authenticate",
+        "description": "The password for {username} was rejected. Enter the current password.",
+        "data": { "password": "Password" }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid username, password or application ID.",
+      "cannot_connect": "Could not reach the Glowmarkt API."
+    },
+    "abort": {
+      "already_configured": "This account is already configured.",
+      "reauth_successful": "Re-authentication successful."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Glowmarkt options",
+        "data": {
+          "scan_interval": "Update interval (minutes)",
+          "timezone": "Meter timezone (IANA name)",
+          "backfill_days": "Days of hourly history to import on first run"
+        },
+        "data_description": {
+          "timezone": "Day, week, month and year totals follow this timezone.",
+          "backfill_days": "Only used the first time statistics are created."
+        }
+      }
+    },
+    "error": {
+      "invalid_timezone": "Unknown timezone, e.g. Europe/London."
+    }
+  }
+}

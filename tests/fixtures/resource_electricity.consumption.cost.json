@@ -1,0 +1,17 @@
+{
+ "active": true,
+ "resourceTypeId": "e1ec0c05-0000-4000-9000-000000000002",
+ "name": "electricity cost",
+ "description": "electicity cost DCC SM profile reads",
+ "label": "electicity cost DCC SM profile reads",
+ "dataSourceResourceTypeInfo": {
+  "unit": "pence",
+  "type": "ELEC"
+ },
+ "dataSourceType": "AMRAPI",
+ "classifier": "electricity.consumption.cost",
+ "baseUnit": "pence",
+ "resourceId": "e1ec0c05-0000-4000-8000-000000000002",
+ "updatedAt": "2026-10-19T00:44:10.343Z",
+ "createdAt": "2026-10-19T00:44:09.157Z"
+}

@@ -1,0 +1,28 @@
+{
+ "valid": true,
+ "status": "OK",
+ "resourceId": "e1ec0c05-0000-4000-8000-000000000002",
+ "classifier": "electricity.consumption.cost",
+ "data": [
+  {
+   "id": 1,
+   "plan": [
+    {
+     "source": "DCC",
+     "planDetail": [
+      {
+       "standing": 61.41
+      },
+      {
+       "tier": 1,
+       "rate": 26.11
+      }
+     ],
+     "weekName": "1"
+    }
+   ],
+   "effectiveDate": "2026-10-19 00:00:00",
+   "displayName": "fromDCC"
+  }
+ ]
+}
