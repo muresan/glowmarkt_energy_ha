@@ -10,5 +10,5 @@
   "issue_tracker": "https://example.invalid/issues",
   "loggers": ["custom_components.glowmarkt_energy"],
   "requirements": [],
-  "version": "0.4.0"
+  "version": "0.4.1"
 }

@@ -6,13 +6,14 @@ day / week / month / year totals.
 
 ## Install
 1. Copy `custom_components/glowmarkt_energy` into your Home Assistant `config/custom_components/` folder
-   (or add this repo to HACS as a custom repository).
+   (or add this repo to HACS as a custom repository; HACS offers the GitHub releases only, not the latest commit).
 2. Restart Home Assistant.
 3. *Settings → Devices & services → Add integration → Glowmarkt Energy (Bright)* and sign in with your Bright
    username and password. Leave the Application ID at its default (the published ID for individual Bright users).
 
 Requires Home Assistant 2024.11 or newer (tested against 2026.10.4). Entities appear after the first refresh,
 which also imports up to 30 days of hourly history (configurable under the integration's *Configure* button).
+The integration's icon (`brand/`) shows from Home Assistant 2026.3 on.
 
 ## What you get
 For each resource the account has (Electricity, Gas, Electricity cost, Gas cost):
@@ -96,3 +97,11 @@ replaces earlier values.
   python3 -m venv .venv && .venv/bin/pip install -r requirements_test.txt
   .venv/bin/python -m pytest
   ```
+
+## Releasing
+Set `version` in `custom_components/glowmarkt_energy/manifest.json`, commit, then tag and push the tag:
+```
+git tag v0.4.1 && git push origin v0.4.1
+```
+The `Release` workflow checks that the tag matches the manifest version and publishes a GitHub release, which
+HACS then offers as an update.
