@@ -124,6 +124,14 @@ class GlowmarktCoordinator(DataUpdateCoordinator[dict[str, ResourceData]]):
         self._tz = None
         self._backfill_days = entry.options.get(CONF_BACKFILL_DAYS, DEFAULT_BACKFILL_DAYS)
         self._catchup_requested: dict[str, datetime] = {}  # resource id -> last request
+        # Shown by the diagnostic sensors; kept in memory, so they start empty after a restart.
+        self.last_success: datetime | None = None  # end of the last poll the API answered
+        self.last_error: datetime | None = None  # last failed API request
+        self.last_error_message: str | None = None
+
+    def _record_error(self, err: Exception) -> None:
+        self.last_error = dt_util.utcnow()
+        self.last_error_message = str(err)
 
     async def _async_update_data(self) -> dict[str, ResourceData]:
         try:
@@ -139,22 +147,29 @@ class GlowmarktCoordinator(DataUpdateCoordinator[dict[str, ResourceData]]):
 
             data: dict[str, ResourceData] = {}
             errors: list[str] = []
+            answered = False
             for res in self.resources:
                 try:
                     data[res.resource_id] = await self._async_update_resource(res)
+                    answered = True
                 except GlowmarktAuthError:
                     raise
                 except GlowmarktError as err:
                     _LOGGER.warning("Update of %s failed: %s", res.statistic_id, err)
+                    self._record_error(err)
                     errors.append(str(err))
                     if self.data and res.resource_id in self.data:
                         data[res.resource_id] = self.data[res.resource_id]
+            if answered:
+                self.last_success = dt_util.utcnow()
             if not data:
                 raise UpdateFailed("; ".join(errors))
             return data
         except GlowmarktAuthError as err:
+            self._record_error(err)
             raise ConfigEntryAuthFailed(str(err)) from err
         except GlowmarktError as err:
+            self._record_error(err)
             raise UpdateFailed(str(err)) from err
 
     async def _async_discover(self) -> None:
@@ -227,6 +242,7 @@ class GlowmarktCoordinator(DataUpdateCoordinator[dict[str, ResourceData]]):
                 raise
             except GlowmarktError as err:
                 _LOGGER.debug("Tariff of %s unavailable: %s", res.statistic_id, err)
+                self._record_error(err)
         return ResourceData(
             last_ts=last_ts,
             local_date=local_date,
@@ -253,6 +269,7 @@ class GlowmarktCoordinator(DataUpdateCoordinator[dict[str, ResourceData]]):
             raise
         except GlowmarktError as err:
             _LOGGER.debug("Catch-up request for %s failed: %s", res.statistic_id, err)
+            self._record_error(err)
 
     async def _async_import_hourly(
         self, res: Resource, until: datetime
@@ -342,6 +359,7 @@ class GlowmarktCoordinator(DataUpdateCoordinator[dict[str, ResourceData]]):
             raise
         except GlowmarktError as err:
             _LOGGER.warning("Tariff history of %s unavailable: %s", res.statistic_id, err)
+            self._record_error(err)
             return []
         if not history:
             _LOGGER.warning("No standing charge in the tariff history of %s", res.statistic_id)

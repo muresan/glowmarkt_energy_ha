@@ -124,15 +124,59 @@ CONSUMPTION_SENSORS: tuple[GlowmarktSensorDescription, ...] = (
 )
 
 
+@dataclass(frozen=True, kw_only=True)
+class GlowmarktApiSensorDescription(SensorEntityDescription):
+    """How to read one API status value from the coordinator."""
+
+    value_fn: Callable[[GlowmarktCoordinator], datetime | None]
+    attrs_fn: Callable[[GlowmarktCoordinator], dict[str, Any] | None] = lambda _: None
+
+
+# One set per meter (virtual entity) device; they describe the whole account's API access.
+API_SENSORS: tuple[GlowmarktApiSensorDescription, ...] = (
+    GlowmarktApiSensorDescription(
+        key="api_last_success",
+        name="API last successful fetch",
+        device_class=SensorDeviceClass.TIMESTAMP,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda c: c.last_success,
+    ),
+    GlowmarktApiSensorDescription(
+        key="api_last_error",
+        name="API last error",
+        device_class=SensorDeviceClass.TIMESTAMP,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda c: c.last_error,
+        attrs_fn=lambda c: {"error": c.last_error_message} if c.last_error_message else None,
+    ),
+)
+
+
+def _device_info(res: Resource) -> DeviceInfo:
+    return DeviceInfo(
+        identifiers={(DOMAIN, res.ve_id)},
+        name=res.ve_name,
+        manufacturer="Hildebrand (Glowmarkt / Bright)",
+        entry_type=DeviceEntryType.SERVICE,
+    )
+
+
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
     coordinator: GlowmarktCoordinator = hass.data[DOMAIN][entry.entry_id]
-    async_add_entities(
+    entities: list[SensorEntity] = [
         GlowmarktSensor(coordinator, res, description)
         for res in coordinator.resources
         for description in SENSORS + (() if res.is_cost else CONSUMPTION_SENSORS)
+    ]
+    first_of_device = {res.ve_id: res for res in reversed(coordinator.resources)}
+    entities.extend(
+        GlowmarktApiSensor(coordinator, res, description)
+        for res in first_of_device.values()
+        for description in API_SENSORS
     )
+    async_add_entities(entities)
 
 
 class GlowmarktSensor(CoordinatorEntity[GlowmarktCoordinator], SensorEntity):
@@ -161,12 +205,7 @@ class GlowmarktSensor(CoordinatorEntity[GlowmarktCoordinator], SensorEntity):
             self._attr_native_unit_of_measurement = res.unit
             self._attr_device_class = DEVICE_CLASSES.get(res.unit)
             self._attr_suggested_display_precision = 2 if res.is_cost else 3
-        self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, res.ve_id)},
-            name=res.ve_name,
-            manufacturer="Hildebrand (Glowmarkt / Bright)",
-            entry_type=DeviceEntryType.SERVICE,
-        )
+        self._attr_device_info = _device_info(res)
 
     @property
     def _data(self) -> ResourceData | None:
@@ -181,3 +220,33 @@ class GlowmarktSensor(CoordinatorEntity[GlowmarktCoordinator], SensorEntity):
     def extra_state_attributes(self) -> dict[str, Any] | None:
         data = self._data
         return None if data is None else self.entity_description.attrs_fn(data)
+
+
+class GlowmarktApiSensor(CoordinatorEntity[GlowmarktCoordinator], SensorEntity):
+    """When the API last answered / last failed, for the device of a meter."""
+
+    _attr_has_entity_name = True
+    entity_description: GlowmarktApiSensorDescription
+
+    def __init__(
+        self,
+        coordinator: GlowmarktCoordinator,
+        res: Resource,
+        description: GlowmarktApiSensorDescription,
+    ) -> None:
+        super().__init__(coordinator)
+        self.entity_description = description
+        self._attr_unique_id = f"{res.ve_id}_{description.key}"
+        self._attr_device_info = _device_info(res)
+
+    @property
+    def available(self) -> bool:
+        return True  # most useful exactly when an update has failed
+
+    @property
+    def native_value(self) -> datetime | None:
+        return self.entity_description.value_fn(self.coordinator)
+
+    @property
+    def extra_state_attributes(self) -> dict[str, Any] | None:
+        return self.entity_description.attrs_fn(self.coordinator)

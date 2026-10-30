@@ -1,4 +1,4 @@
-# Glowmarkt Energy (Bright) – Home Assistant custom integration
+  # Glowmarkt Energy (Bright) – Home Assistant custom integration
 
 Electricity and gas usage, cost and tariff from the Glowmarkt / Hildebrand "Bright" API
 (`https://api.glowmarkt.com/api/v0-1`), as hourly long-term statistics for the Energy dashboard plus
@@ -31,6 +31,16 @@ For Electricity and Gas additionally:
 | `… unit rate` | GBP/kWh | Current tariff; attributes `tariff_name`, `tariff_type`, `effective_from`; gas adds `rate_GBP_per_m3`; time-of-use and dynamic tariffs add `plan_detail` (pence, as returned) |
 | `… standing charge` | GBP/day | |
 | `… data until` (diagnostic) | timestamp | End of the latest half-hour the API has readings for |
+
+And once per meter device, both diagnostic timestamps:
+
+| Entity | Notes |
+|---|---|
+| `API last successful fetch` | End of the last poll the API answered (also when it had no new readings) |
+| `API last error` | Last failed API request (poll, tariff, catch-up, login); the message is in the `error` attribute |
+
+Both are kept in memory, so they show *Unknown* after a restart until the next poll / error. They stay available
+when an update fails, while the other sensors become unavailable.
 
 The API reports cost in pence; the integration converts it to GBP. All cost values **include the standing
 charge**: the day/week/month/year totals as the API aggregates them, and the hourly cost because the integration

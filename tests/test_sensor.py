@@ -10,8 +10,8 @@ from homeassistant.helpers import entity_registry as er
 
 from custom_components.glowmarkt_energy.const import DOMAIN
 
-from .conftest import UTC
-from .fake_glowmarkt import ELEC, ELEC_COST, GAS, GAS_COST, FakeGlowmarkt
+from .conftest import NOW, UTC
+from .fake_glowmarkt import ELEC, ELEC_COST, GAS, GAS_COST, VE_ID, FakeGlowmarkt
 
 pytestmark = pytest.mark.usefixtures("setup_integration")
 
@@ -109,6 +109,7 @@ async def test_data_until_and_entity_set(hass: HomeAssistant) -> None:
     consumption_only = {"unit_rate", "standing_charge", "data_until"}
     expected = {f"{r}_{k}" for r in (ELEC, GAS) for k in totals | consumption_only}
     expected |= {f"{r}_{k}" for r in (ELEC_COST, GAS_COST) for k in totals}
+    expected |= {f"{VE_ID}_api_last_success", f"{VE_ID}_api_last_error"}
     assert unique_ids == expected  # no 30-minute sensor any more
     device = state_of(hass, ELEC, "today").entity_id
     assert device.startswith("sensor.dcc_sourced_electricity")
@@ -125,3 +126,25 @@ async def test_day_rollover(hass: HomeAssistant, fake_api: FakeGlowmarkt, freeze
     assert value_of(hass, ELEC, "yesterday") == pytest.approx(0.02)
     assert value_of(hass, ELEC_COST, "today") == pytest.approx(ELEC_STANDING / 100)
     assert value_of(hass, ELEC, "last_hour") == pytest.approx(0.02)  # still the 00:00 hour
+
+
+async def test_api_status_sensors(hass: HomeAssistant) -> None:
+    """Diagnostic sensors on the meter's device: last answer from the API, last failure."""
+    registry = er.async_get(hass)
+    success = registry.async_get(
+        registry.async_get_entity_id("sensor", DOMAIN, f"{VE_ID}_api_last_success")
+    )
+    error = registry.async_get(
+        registry.async_get_entity_id("sensor", DOMAIN, f"{VE_ID}_api_last_error")
+    )
+    data_until = registry.async_get(
+        registry.async_get_entity_id("sensor", DOMAIN, f"{ELEC}_data_until")
+    )
+    assert success.entity_category is error.entity_category is EntityCategory.DIAGNOSTIC
+    assert success.device_id == error.device_id == data_until.device_id
+    assert success.entity_id == "sensor.dcc_sourced_api_last_successful_fetch"
+
+    assert hass.states.get(success.entity_id).state == NOW.isoformat()
+    state = hass.states.get(error.entity_id)
+    assert state.state == "unknown"  # nothing has failed
+    assert "error" not in state.attributes
